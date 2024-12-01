@@ -7,9 +7,9 @@ def List.sum (xs: List Int) : Int := xs.foldl .add 0
 #guard [].sum = 0
 #guard [1, 2, 3].sum = 6
 
-def List.sumBy (f : α → Int) (xs : List α) : Int := xs.foldl (fun acc x => acc + f x) 0
+def List.sumBy (f : α → Int) (xs : List α) : Int := xs.foldl (λ acc x => acc + f x) 0
 
-#guard [1, 2, 3].sumBy (fun x => x * x) = 14
+#guard [1, 2, 3].sumBy (λ x => x * x) = 14
 
 -- https://brandonrozek.com/blog/writing-unit-tests-lean-4/
 def Except.deq [DecidableEq α] [DecidableEq β] : DecidableEq (Except α β) := by
@@ -30,7 +30,7 @@ def Except.deq [DecidableEq α] [DecidableEq β] : DecidableEq (Except α β) :=
 instance: DecidableEq (Except String Bool) := Except.deq
 
 instance [BEq α] [BEq β] : BEq (Except α β) where
-  beq := fun x y => match x, y with
+  beq := λ x y => match x, y with
     | Except.ok x, Except.ok y => x == y
     | Except.error x, Except.error y => x == y
     | _, _ => false
