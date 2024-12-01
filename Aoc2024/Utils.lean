@@ -32,8 +32,7 @@ instance [BEq α] [BEq β] : BEq (Except α β) where
     | Except.error x, Except.error y => x == y
     | _, _ => false
 
-def getOrThrow (message : String) (o : Option α) : Except String α :=
-  match o with
+def getOrThrow (message : String) : Option α -> Except String α
   | some x => pure x
   | none => throw message
 
