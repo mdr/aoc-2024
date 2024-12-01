@@ -1,12 +1,21 @@
 import Aoc2024.Day01
 
+def liftIO (t : ExceptT String Id α) : IO α := do
+  match t with
+  | .ok r => EStateM.Result.ok r
+  | .error e => EStateM.Result.error e
+
+instance : MonadLift (ExceptT String Id) IO where
+  monadLift := liftIO
+
 def main : IO Unit := do
   let path := "inputs/day01/input.txt"
-  let inputString ← IO.FS.readFile path
+  let input ← IO.FS.readFile path
   IO.println "Day 01"
-  match Aoc2024.Day01.parseAndSolvePart1 inputString with
-  | .ok answer => IO.println s!"Part 1: {answer}"
-  | .error e => IO.println s!"Caught exception: {e}"
-  match Aoc2024.Day01.parseAndSolvePart2 inputString with
-  | .ok answer => IO.println s!"Part 2: {answer}"
-  | .error e => IO.println s!"Caught exception: {e}"
+  try
+    let part1 <- Aoc2024.Day01.parseAndSolvePart1 input
+    IO.println s!"Part 1: {part1}"
+    let part2 <- Aoc2024.Day01.parseAndSolvePart2 input
+    IO.println s!"Part 2: {part2}"
+  catch e =>
+    IO.println s!"Caught exception: {e}"

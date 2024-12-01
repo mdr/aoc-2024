@@ -8,8 +8,8 @@ def parseTwoNumbers (line : String) :  Except String (Int × Int) :=
   | [a, b] =>
     match a.toInt?, b.toInt? with
     | some a, some b => pure (a, b)
-    | _, _ => throw "Failed to parse numbers"
-  | _ => throw "Failed to parse line"
+    | _, _ => throw s!"Failed to parse numbers in line: {line}"
+  | _ => throw s!"Failed to find two items in line: {line}"
 
 def parseLines (s : String) : Except String (List (Int × Int)) :=
   s.splitOn "\n" |>.mapM parseTwoNumbers
