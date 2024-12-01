@@ -12,3 +12,5 @@ private def lineParser : Parser (Int × Int) := do
 private def inputParser : Parser (List (Int × Int)) := sepBy lineParser (String.skipChar '\n')
 
 def parseLines : String -> Except String (List (Int × Int)) := inputParser.run
+
+#guard parseLines "23   24\n14   13" == Except.ok [(23, 24), (14, 13)]

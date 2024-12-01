@@ -1,19 +1,12 @@
 import Aoc2024.Day01.Parser
 import Aoc2024.Utils
+import Aoc2024.Day01.Examples
 namespace Aoc2024.Day01
-
-private def exampleInput :=
-"3   4
-4   3
-2   5
-1   3
-3   9
-3   3"
 
 private def solvePart1 (pairs : List (Int × Int)) : Int :=
   let (firsts, seconds) := pairs.unzip
   let distance (a b : Int) : Int := (a - b).natAbs
-  (firsts.mergeSort.zipWith distance seconds.mergeSort) |> sumList
+  firsts.mergeSort.zipWith distance seconds.mergeSort |> sumList
 
 def parseAndSolvePart1 : String -> Except String Int := .map solvePart1 ∘ parseLines
 
