@@ -1,6 +1,4 @@
-def readLines (path : String) : IO (List String) := do
-  let contents ← IO.FS.readFile path
-  return contents.splitOn "\n"
+import Aoc2024.Day01
 
 def splitOnWhitespace (s : String) : List String :=
   s.split (λ c => c.isWhitespace) |>.filter (· ≠ "")
@@ -24,30 +22,9 @@ def parseLines (s : String) : Option (List (Int × Int)) :=
 --   parseTwoNumbers "42 17" = some (42, 17) := by
 --     rfl
 
-def distance (a b : Int) : Int :=
-  (a - b).natAbs
-
-def sumList (nums : List Int) : Int :=
-  nums.foldl (fun acc x => acc + x) 0
-
-def solvePart1 (pairs : List (Int × Int)) : Int :=
-  let firsts := pairs.map (·.1) |>.mergeSort
-  let seconds := pairs.map (·.2) |>.mergeSort
-  let pairs := firsts.zipWith distance seconds
-  sumList pairs
-
-def solvePart2 (pairs : List (Int × Int)) : Int :=
-  let firsts := pairs.map (·.1)
-  let seconds := pairs.map (·.2)
-  let countOccurrencesInSeconds (n : Int) : Int :=
-    seconds.filter (· == n) |>.length
-  let similarityScore (n : Int) : Int :=
-    countOccurrencesInSeconds n * n
-  firsts.map similarityScore |> sumList
-
 def main : IO Unit := do
   let path := "inputs/day01/input.txt"
   let maybePairs ← IO.FS.readFile path
   match parseLines maybePairs with
-  | some pairs => IO.println (solvePart2 pairs)
+  | some pairs => IO.println (Aoc2024.Day01.solvePart2 pairs)
   | none => IO.println "Failed to parse lines"
