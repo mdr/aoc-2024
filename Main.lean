@@ -11,11 +11,8 @@ def solve (name: String) (inputPath: String) : IO Unit := do
   IO.println s!"Part 2: {part2}"
 
 def main : IO Unit := do
-  try
-    IO.println "Day 01"
-    IO.println ""
-    solve "Example" "inputs/day01/example.txt"
-    IO.println ""
-    solve "Puzzle" "inputs/day01/input.txt" -- 2066446, 24931009
-  catch e =>
-    IO.println s!"Caught exception: {e}"
+  IO.println "Day 01"
+  IO.println ""
+  solve "Example" "inputs/day01/example.txt"
+  IO.println ""
+  solve "Puzzle" "inputs/day01/input.txt" -- 2066446, 24931009
