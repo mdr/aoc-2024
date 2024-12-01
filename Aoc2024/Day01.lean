@@ -3,15 +3,15 @@ namespace Aoc2024.Day01
 def splitOnWhitespace (s : String) : List String :=
   s.split (·.isWhitespace) |>.filter (· ≠ "")
 
-def parseTwoNumbers (line : String) : Option (Int × Int) :=
+def parseTwoNumbers (line : String) :  Except String (Int × Int) :=
   match splitOnWhitespace line with
   | [a, b] =>
     match a.toInt?, b.toInt? with
-    | some a, some b => some (a, b)
-    | _, _ => none
-  | _ => none
+    | some a, some b => pure (a, b)
+    | _, _ => throw "Failed to parse numbers"
+  | _ => throw "Failed to parse line"
 
-def parseLines (s : String) : Option (List (Int × Int)) :=
+def parseLines (s : String) : Except String (List (Int × Int)) :=
   s.splitOn "\n" |>.mapM parseTwoNumbers
 
 def sumList (nums : List Int) : Int :=
@@ -24,7 +24,7 @@ def solvePart1 (pairs : List (Int × Int)) : Int :=
   let pairs := firsts.zipWith distance seconds
   sumList pairs
 
-def parseAndSolvePart1 (s : String) : Option Int :=
+def parseAndSolvePart1 (s : String) : Except String Int :=
   parseLines s |>.map solvePart1
 
 def solvePart2 (pairs : List (Int × Int)) : Int :=
@@ -36,5 +36,5 @@ def solvePart2 (pairs : List (Int × Int)) : Int :=
     countOccurrencesInSeconds n * n
   firsts.map similarityScore |> sumList
 
-def parseAndSolvePart2 (s : String) : Option Int :=
+def parseAndSolvePart2 (s : String) : Except String Int :=
   parseLines s |>.map solvePart2
