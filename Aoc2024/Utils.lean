@@ -2,15 +2,14 @@ import Std
 open Std.Internal.Parsec.String
 open Std.Internal.Parsec
 
-def sumList (nums : List Int) : Int := nums.foldl (· + ·) 0
+def List.sum (xs: List Int) : Int := xs.foldl .add 0
 
-#guard sumList [] = 0
-#guard sumList [1, 2, 3] = 6
+#guard [].sum = 0
+#guard [1, 2, 3].sum = 6
 
-def sumListBy (f : Int → Int) (nums : List Int) : Int :=
-  nums.foldl (fun acc x => acc + f x) 0
+def List.sumBy (f : α → Int) (xs : List α) : Int := xs.foldl (fun acc x => acc + f x) 0
 
-#guard sumListBy (fun x => x * x) [1, 2, 3] = 14
+#guard [1, 2, 3].sumBy (fun x => x * x) = 14
 
 -- https://brandonrozek.com/blog/writing-unit-tests-lean-4/
 def Except.deq [DecidableEq α] [DecidableEq β] : DecidableEq (Except α β) := by

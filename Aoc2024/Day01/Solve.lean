@@ -6,17 +6,17 @@ namespace Aoc2024.Day01
 private def solvePart1 (pairs : List (Int × Int)) : Int :=
   let (firsts, seconds) := pairs.unzip
   let distance (a b : Int) : Int := (a - b).natAbs
-  firsts.mergeSort.zipWith distance seconds.mergeSort |> sumList
+  (firsts.mergeSort.zipWith distance seconds.mergeSort).sum
 
-def parseAndSolvePart1 : String -> Except String Int := .map solvePart1 ∘ parseLines
+def parseAndSolvePart1 (s : String): Except String Int := parseLines s |> .map solvePart1
 
 #guard (parseAndSolvePart1 exampleInput == Except.ok 11)
 
 private def solvePart2 (pairs : List (Int × Int)) : Int :=
   let (firsts, seconds) := pairs.unzip
   let similarityScore (n : Int) : Int := seconds.count n * n
-  firsts |> sumListBy similarityScore
+  firsts.sumBy similarityScore
 
-def parseAndSolvePart2 : String -> Except String Int := .map solvePart2 ∘ parseLines
+def parseAndSolvePart2 (s : String): Except String Int := parseLines s |> .map solvePart2
 
 #guard (parseAndSolvePart2 exampleInput == Except.ok 31)
