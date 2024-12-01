@@ -1,0 +1,9 @@
+version: '3'
+
+tasks:
+  default: task --list
+  run:
+    desc: Build and run
+    cmds: 
+      - lake build
+      - .lake/build/bin/aoc2024
