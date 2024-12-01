@@ -3,13 +3,19 @@ namespace Aoc2024.Day01
 def splitOnWhitespace (s : String) : List String :=
   s.split (·.isWhitespace) |>.filter (· ≠ "")
 
-def parseTwoNumbers (line : String) :  Except String (Int × Int) :=
-  match splitOnWhitespace line with
-  | [a, b] =>
-    match a.toInt?, b.toInt? with
-    | some a, some b => pure (a, b)
-    | _, _ => throw s!"Failed to parse numbers in line: {line}"
-  | _ => throw s!"Failed to find two items in line: {line}"
+def parseNumber (s: String) : Except String Int :=
+  match s.toInt? with
+  | some n => pure n
+  | none => throw s!"Failed to parse number: {s}"
+
+def getTwoElements (l : List α) : Except String (α × α) :=
+  match l with
+  | [a, b] => pure (a, b)
+  | _ => throw s!"Expected two elements, got {l.length}"
+
+def parseTwoNumbers (line : String) : Except String (Int × Int) := do
+  let (a, b) ← getTwoElements (splitOnWhitespace line)
+  Prod.mk <$> parseNumber a <*> parseNumber b
 
 def parseLines (s : String) : Except String (List (Int × Int)) :=
   s.splitOn "\n" |>.mapM parseTwoNumbers
@@ -18,18 +24,15 @@ def sumList (nums : List Int) : Int :=
   nums.foldl (fun acc x => acc + x) 0
 
 def solvePart1 (pairs : List (Int × Int)) : Int :=
-  let firsts := pairs.map (·.1) |>.mergeSort
-  let seconds := pairs.map (·.2) |>.mergeSort
+  let (firsts, seconds) := pairs.unzip
   let distance (a b : Int) : Int := (a - b).natAbs
-  let pairs := firsts.zipWith distance seconds
-  sumList pairs
+  (firsts.mergeSort.zipWith distance seconds.mergeSort) |> sumList
 
 def parseAndSolvePart1 (s : String) : Except String Int :=
-  parseLines s |>.map solvePart1
+  s |> parseLines |> .map solvePart1
 
 def solvePart2 (pairs : List (Int × Int)) : Int :=
-  let firsts := pairs.map (·.1)
-  let seconds := pairs.map (·.2)
+  let (firsts, seconds) := pairs.unzip
   let countOccurrencesInSeconds (n : Int) : Int :=
     seconds.filter (· == n) |>.length
   let similarityScore (n : Int) : Int :=
@@ -37,4 +40,4 @@ def solvePart2 (pairs : List (Int × Int)) : Int :=
   firsts.map similarityScore |> sumList
 
 def parseAndSolvePart2 (s : String) : Except String Int :=
-  parseLines s |>.map solvePart2
+  s |> parseLines |>.map solvePart2

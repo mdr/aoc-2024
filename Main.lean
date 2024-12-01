@@ -15,8 +15,8 @@ def main : IO Unit := do
     IO.println "Puzzle input"
     let puzzleInput ← IO.FS.readFile "inputs/day01/input.txt"
     let part1 <- Aoc2024.Day01.parseAndSolvePart1 puzzleInput
-    IO.println s!"Part 1: {part1}"
+    IO.println s!"Part 1: {part1}" -- 2066446
     let part2 <- Aoc2024.Day01.parseAndSolvePart2 puzzleInput
-    IO.println s!"Part 2: {part2}"
+    IO.println s!"Part 2: {part2}" -- 24931009
   catch e =>
     IO.println s!"Caught exception: {e}"
