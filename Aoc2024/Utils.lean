@@ -1,3 +1,7 @@
+import Std
+open Std.Internal.Parsec.String
+open Std.Internal.Parsec
+
 def sumList (nums : List Int) : Int := nums.foldl (· + ·) 0
 
 #guard sumList [] = 0
@@ -38,3 +42,14 @@ def getOrThrow (message : String) : Option α -> Except String α
 
 #guard (getOrThrow "Error" (some 42) == Except.ok 42)
 #guard (getOrThrow "Error" (none : Option Int) == Except.error "Error")
+
+def sepBy (p : Parser α) (sep : Parser β) : Parser (List α) :=
+  (do
+    let x ← p
+    let xs ← many (sep *> p)
+    pure (x :: xs.toList)
+  ) <|> pure []
+
+#guard (sepBy digits (skipChar ',')).run "1,2,3" == .ok [1, 2, 3]
+#guard (sepBy digits (skipChar ',')).run "4" == .ok [4]
+#guard (sepBy digits (skipChar ',')).run "" == .ok []
