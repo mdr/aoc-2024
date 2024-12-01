@@ -5,10 +5,8 @@ open Aoc2024.Day01
 def solve (name: String) (inputPath: String) : IO Unit := do
   IO.println name
   let input <- IO.FS.readFile inputPath
-  let part1 <- parseAndSolvePart1 input
-  IO.println s!"Part 1: {part1}"
-  let part2 <- parseAndSolvePart2 input
-  IO.println s!"Part 2: {part2}"
+  IO.println s!"Part 1: {<- parseAndSolvePart1 input}"
+  IO.println s!"Part 2: {<- parseAndSolvePart2 input}"
 
 def main : IO Unit := do
   IO.println "Day 2"
