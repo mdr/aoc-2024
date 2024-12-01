@@ -4,7 +4,7 @@ def splitOnWhitespace (s : String) : List String :=
   s.split Char.isWhitespace |> .filter (· ≠ "")
 
 def parseNumber (s: String) : Except String Int :=
-  s.toInt? |> getOrExcept s!"Failed to parse as number: {s}"
+  s.toInt? |> getOrThrow s!"Failed to parse as number: {s}"
 
 def getTwoElements (l : List α) : Except String (α × α) := do
   let [a, b] := l | throw s!"Expected two elements, but got {l.length}"
