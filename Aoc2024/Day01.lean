@@ -11,19 +11,8 @@ def parseTwoNumbers (line : String) : Option (Int × Int) :=
     | _, _ => none
   | _ => none
 
-#eval parseTwoNumbers "42   17"
-
 def parseLines (s : String) : Option (List (Int × Int)) :=
   s.splitOn "\n" |>.mapM parseTwoNumbers
-
-#eval parseLines "42 17\n1 2\n3 4"
-
--- theorem test_parseTwoNumbers_valid :
---   parseTwoNumbers "42 17" = some (42, 17) := by
---     rfl
-
-def distance (a b : Int) : Int :=
-  (a - b).natAbs
 
 def sumList (nums : List Int) : Int :=
   nums.foldl (fun acc x => acc + x) 0
@@ -31,8 +20,12 @@ def sumList (nums : List Int) : Int :=
 def solvePart1 (pairs : List (Int × Int)) : Int :=
   let firsts := pairs.map (·.1) |>.mergeSort
   let seconds := pairs.map (·.2) |>.mergeSort
+  let distance (a b : Int) : Int := (a - b).natAbs
   let pairs := firsts.zipWith distance seconds
   sumList pairs
+
+def parseAndSolvePart1 (s : String) : Option Int :=
+  parseLines s |>.map solvePart1
 
 def solvePart2 (pairs : List (Int × Int)) : Int :=
   let firsts := pairs.map (·.1)
@@ -42,3 +35,6 @@ def solvePart2 (pairs : List (Int × Int)) : Int :=
   let similarityScore (n : Int) : Int :=
     countOccurrencesInSeconds n * n
   firsts.map similarityScore |> sumList
+
+def parseAndSolvePart2 (s : String) : Option Int :=
+  parseLines s |>.map solvePart2
