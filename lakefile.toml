@@ -1,10 +1,14 @@
 name = "aoc2024"
 version = "0.1.0"
-defaultTargets = ["aoc2024"]
+defaultTargets = ["day1", "day2"]
 
 [[lean_lib]]
 name = "Aoc2024"
 
 [[lean_exe]]
-name = "aoc2024"
-root = "Main"
+name = "day1"
+root = "Aoc2024.Day01.Main"
+
+[[lean_exe]]
+name = "day2"
+root = "Aoc2024.Day02.Main"

@@ -11,8 +11,8 @@ def solve (name: String) (inputPath: String) : IO Unit := do
   IO.println s!"Part 2: {part2}"
 
 def main : IO Unit := do
-  IO.println "Day 01"
+  IO.println "Day 1"
   IO.println ""
-  solve "Example" "inputs/day01/example.txt"
+  solve "Example" "Aoc2024/Day01/inputs/example.txt"
   IO.println ""
-  solve "Puzzle" "inputs/day01/input.txt" -- 2066446, 24931009
+  solve "Puzzle" "Aoc2024/Day01/inputs/input.txt" -- 2066446, 24931009

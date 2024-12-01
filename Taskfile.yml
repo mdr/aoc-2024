@@ -2,8 +2,21 @@ version: '3'
 
 tasks:
   default: task --list
-  run:
-    desc: Build and run
-    cmds: 
+  build:
+    desc: Build
+    sources:
+      - Aoc2024/**/*.lean
+    generates:
+      - .lake/build/bin/*
+    cmds:
       - lake build
-      - .lake/build/bin/aoc2024
+  day1:
+    desc: Run day 1
+    deps: [build]
+    cmds: 
+      - .lake/build/bin/day1
+  day2:
+    desc: Run day 2
+    deps: [build]
+    cmds: 
+      - .lake/build/bin/day2
