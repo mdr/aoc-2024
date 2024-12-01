@@ -1,7 +1,7 @@
 namespace Aoc2024.Day01
 
 def splitOnWhitespace (s : String) : List String :=
-  s.split (·.isWhitespace) |>.filter (· ≠ "")
+  s.split Char.isWhitespace |> .filter (· ≠ "")
 
 def parseNumber (s: String) : Except String Int :=
   match s.toInt? with
@@ -33,10 +33,7 @@ def parseAndSolvePart1 (s : String) : Except String Int :=
 
 def solvePart2 (pairs : List (Int × Int)) : Int :=
   let (firsts, seconds) := pairs.unzip
-  let countOccurrencesInSeconds (n : Int) : Int :=
-    seconds.filter (· == n) |>.length
-  let similarityScore (n : Int) : Int :=
-    countOccurrencesInSeconds n * n
+  let similarityScore (n : Int) : Int := seconds.filter (· == n) |>.length |> (· * n)
   firsts.map similarityScore |> sumList
 
 def parseAndSolvePart2 (s : String) : Except String Int :=
