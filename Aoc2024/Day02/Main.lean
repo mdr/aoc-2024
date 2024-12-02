@@ -12,4 +12,4 @@ def main : IO Unit := do
   IO.println ""
   solve "Example" "Aoc2024/Day02/inputs/example.txt"
   IO.println ""
-  solve "Puzzle" "Aoc2024/Day02/inputs/input.txt"
+  solve "Puzzle" "Aoc2024/Day02/inputs/input.txt" -- 534, 577
