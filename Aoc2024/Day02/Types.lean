@@ -1,0 +1,1 @@
+abbrev Report := List Int
