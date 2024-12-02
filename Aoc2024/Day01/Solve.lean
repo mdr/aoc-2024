@@ -1,6 +1,6 @@
-import Aoc2024.Day01.Parser
-import Aoc2024.Day01.Examples
 import Aoc2024.Utils
+import Aoc2024.Day01.Examples
+import Aoc2024.Day01.Parser
 
 private def solvePart1 (pairs : List (Int × Int)) : Int :=
   let (firsts, seconds) := pairs.unzip

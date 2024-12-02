@@ -1,7 +1,7 @@
-import Aoc2024.Day02.Parser
 import Aoc2024.Utils
-import Batteries
 import Aoc2024.Day02.Examples
+import Aoc2024.Day02.Parser
+
 open Std (HashSet)
 
 private def increasingSlowly: HashSet Int := [1, 2, 3].toSet
