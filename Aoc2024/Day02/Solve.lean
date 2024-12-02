@@ -3,7 +3,6 @@ import Aoc2024.Utils
 import Batteries
 import Aoc2024.Day02.Examples
 open Std (HashSet)
-namespace Aoc2024.Day02
 
 private def increasingSlowly: HashSet Int := [1, 2, 3].toSet
 private def decreasingSlowly: HashSet Int := [-1, -2, -3].toSet
