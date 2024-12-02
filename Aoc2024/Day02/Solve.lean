@@ -9,7 +9,7 @@ private def decreasingSlowly: HashSet Int := [-1, -2, -3].toSet
 
 private def isSafe (report : Report) : Bool :=
   let diffs := report.differences.toSet
-  diffs.isSubsetOf increasingSlowly ∨ diffs.isSubsetOf decreasingSlowly
+  diffs.isSubsetOf increasingSlowly || diffs.isSubsetOf decreasingSlowly
 
 #guard isSafe [7, 6, 4, 2, 1] == true
 #guard isSafe [1, 2, 7, 8, 9] == false
