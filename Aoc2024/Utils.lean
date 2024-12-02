@@ -1,11 +1,7 @@
 import Std
 open Std.Internal.Parsec.String
 open Std.Internal.Parsec
-
--- def List.sum (xs: List Int) : Int := xs.foldl .add 0
-
--- #guard [].sum = 0
--- #guard [1, 2, 3].sum = 6
+open Std (HashSet)
 
 def List.sumBy (f : α → Int) (xs : List α) : Int := xs.foldl (λ acc x => acc + f x) 0
 
@@ -52,3 +48,24 @@ def sepBy (p : Parser α) (sep : Parser β) : Parser (List α) :=
 #guard (sepBy digits (skipChar ',')).run "1,2,3" == .ok [1, 2, 3]
 #guard (sepBy digits (skipChar ',')).run "4" == .ok [4]
 #guard (sepBy digits (skipChar ',')).run "" == .ok []
+
+def differences (xs: List Int) : List Int :=
+  xs.zip xs.tail |>.map (λ (a, b) => b - a)
+
+#guard differences [] == []
+#guard differences [1] == []
+#guard differences [1, 2, 3, 2, 5] == [1, 1, -1, 3]
+
+def isSubsetOf [Hashable α] [BEq α] (xs: HashSet α) (ys: HashSet α) : Bool :=
+  xs.all ys.contains
+
+#guard isSubsetOf (HashSet.ofList [1, 3]) (HashSet.ofList [1, 2, 3]) == true
+#guard isSubsetOf (HashSet.ofList [1, 4]) (HashSet.ofList [1, 2, 3]) == false
+
+def removeNth (n: Nat) (xs: List α) : List α :=
+  xs.take n ++ xs.drop (n + 1)
+
+#guard removeNth 0 [1, 2, 3] == [2, 3]
+#guard removeNth 1 [1, 2, 3] == [1, 3]
+#guard removeNth 2 [1, 2, 3] == [1, 2]
+#guard removeNth 3 [1, 2, 3] == [1, 2, 3]

@@ -5,13 +5,6 @@ import Aoc2024.Day02.Examples
 open Std (HashSet)
 namespace Aoc2024.Day02
 
-private def differences (xs: List Int) : List Int :=
-  xs.zip xs.tail |>.map (λ (a, b) => b - a)
-
-#guard differences [] == []
-#guard differences [1] == []
-#guard differences [1, 2, 3, 2, 5] == [1, 1, -1, 3]
-
 private def increasingSlowly: HashSet Int := HashSet.ofList [1, 2, 3]
 private def decreasingSlowly: HashSet Int := HashSet.ofList [-1, -2, -3]
 
