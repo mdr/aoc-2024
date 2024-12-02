@@ -27,6 +27,13 @@ def parseAndSolvePart1 (s : String): Except String Int := parseReports s |>.map 
 private def isSafeWithTolerance (report : Report) : Bool :=
   List.range report.length |>.map report.removeNth |>.any isSafe
 
+#guard isSafeWithTolerance [7, 6, 4, 2, 1] == true
+#guard isSafeWithTolerance [1, 2, 7, 8, 9] == false
+#guard isSafeWithTolerance [9, 7, 6, 2, 1] == false
+#guard isSafeWithTolerance [1, 3, 2, 4, 5] == true
+#guard isSafeWithTolerance [8, 6, 4, 4, 1] == true
+#guard isSafeWithTolerance [1, 3, 6, 7, 9] == true
+
 private def solvePart2 (reports : List Report) : Int := reports.countP isSafeWithTolerance
 
 def parseAndSolvePart2 (s : String): Except String Int := parseReports s |>.map solvePart2
