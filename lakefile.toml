@@ -1,6 +1,6 @@
 name = "aoc2024"
 version = "0.1.0"
-defaultTargets = ["day1", "day2"]
+defaultTargets = ["day1", "day2", "day3", "dayXX"]
 
 [[lean_lib]]
 name = "Aoc2024"
@@ -12,6 +12,14 @@ root = "Aoc2024.Day01.Main"
 [[lean_exe]]
 name = "day2"
 root = "Aoc2024.Day02.Main"
+
+[[lean_exe]]
+name = "day3"
+root = "Aoc2024.Day03.Main"
+
+[[lean_exe]]
+name = "dayXX"
+root = "Aoc2024.DayXX.Main"
 
 [[require]]
 name = "batteries"
