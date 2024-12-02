@@ -6,7 +6,7 @@ open Std.Internal.Parsec
 
 private def lineParser : Parser (Int × Int) := do
   let a ← String.digits
-  let _ <- String.ws
+  let _ ← String.ws
   let b ← String.digits
   pure (a, b)
 
