@@ -3,10 +3,6 @@ open Std.Internal.Parsec.String
 open Std.Internal.Parsec
 open Std (HashSet)
 
-def List.sumBy (f : α → Int) (xs : List α) : Int := xs.foldl (λ acc x => acc + f x) 0
-
-#guard [1, 2, 3].sumBy (λ x => x * x) = 14
-
 -- https://brandonrozek.com/blog/writing-unit-tests-lean-4/
 def Except.deq [DecidableEq α] [DecidableEq β] : DecidableEq (Except α β) := by
   unfold DecidableEq
@@ -49,23 +45,38 @@ def sepBy (p : Parser α) (sep : Parser β) : Parser (List α) :=
 #guard (sepBy digits (skipChar ',')).run "4" == .ok [4]
 #guard (sepBy digits (skipChar ',')).run "" == .ok []
 
-def differences (xs: List Int) : List Int :=
-  xs.zip xs.tail |>.map (λ (a, b) => b - a)
+namespace List
 
-#guard differences [] == []
-#guard differences [1] == []
-#guard differences [1, 2, 3, 2, 5] == [1, 1, -1, 3]
+  def sumBy (f : α → Int) (xs : List α) : Int := xs.foldl (λ acc x => acc + f x) 0
 
-def isSubsetOf [Hashable α] [BEq α] (xs: HashSet α) (ys: HashSet α) : Bool :=
-  xs.all ys.contains
+  def toSet {α:Type} [BEq α] [Hashable α] (xs: List α) : HashSet α :=
+    HashSet.ofList xs
 
-#guard isSubsetOf (HashSet.ofList [1, 3]) (HashSet.ofList [1, 2, 3]) == true
-#guard isSubsetOf (HashSet.ofList [1, 4]) (HashSet.ofList [1, 2, 3]) == false
+  def removeNth (n: Nat) (xs: List α) : List α :=
+    xs.take n ++ xs.drop (n + 1)
 
-def removeNth (n: Nat) (xs: List α) : List α :=
-  xs.take n ++ xs.drop (n + 1)
+  def differences (xs: List Int) : List Int :=
+    xs.zip xs.tail |>.map (λ (a, b) => b - a)
 
-#guard removeNth 0 [1, 2, 3] == [2, 3]
-#guard removeNth 1 [1, 2, 3] == [1, 3]
-#guard removeNth 2 [1, 2, 3] == [1, 2]
-#guard removeNth 3 [1, 2, 3] == [1, 2, 3]
+end List
+
+#guard [1, 2, 3].sumBy (λ x => x * x) = 14
+
+#guard [].differences == []
+#guard [1].differences == []
+#guard [1, 2, 3, 2, 5].differences == [1, 1, -1, 3]
+
+#guard [1, 2, 3].removeNth 0 == [2, 3]
+#guard [1, 2, 3].removeNth 1 == [1, 3]
+#guard [1, 2, 3].removeNth 2 == [1, 2]
+#guard [1, 2, 3].removeNth 3 == [1, 2, 3]
+
+namespace Std.HashSet
+
+  def isSubsetOf [Hashable α] [BEq α] (xs: HashSet α) (ys: HashSet α) : Bool :=
+    xs.all ys.contains
+
+end Std.HashSet
+
+#guard [1, 3].toSet.isSubsetOf [1, 2, 3].toSet == true
+#guard [1, 2, 3].toSet.isSubsetOf [1, 3].toSet == false
