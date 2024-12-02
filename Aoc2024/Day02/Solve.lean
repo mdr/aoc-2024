@@ -18,6 +18,9 @@ private def decreasingSlowly: HashSet Int := HashSet.ofList [-1, -2, -3]
 private def isSubsetOf [Hashable α] [BEq α] (xs: HashSet α) (ys: HashSet α) : Bool :=
   xs.all ys.contains
 
+#guard isSubsetOf (HashSet.ofList [1, 3]) (HashSet.ofList [1, 2, 3]) == true
+#guard isSubsetOf (HashSet.ofList [1, 4]) (HashSet.ofList [1, 2, 3]) == false
+
 private def isSafe (report : Report) : Bool :=
   let diffs := differences report |> HashSet.ofList
   isSubsetOf diffs increasingSlowly || isSubsetOf diffs decreasingSlowly
