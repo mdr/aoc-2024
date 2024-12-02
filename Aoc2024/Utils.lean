@@ -52,9 +52,6 @@ namespace List
   def toSet {α:Type} [BEq α] [Hashable α] (xs: List α) : HashSet α :=
     HashSet.ofList xs
 
-  def removeNth (n: Nat) (xs: List α) : List α :=
-    xs.take n ++ xs.drop (n + 1)
-
   def differences (xs: List Int) : List Int :=
     xs.zip xs.tail |>.map (λ (a, b) => b - a)
 
@@ -65,11 +62,6 @@ end List
 #guard [].differences == []
 #guard [1].differences == []
 #guard [1, 2, 3, 2, 5].differences == [1, 1, -1, 3]
-
-#guard [1, 2, 3].removeNth 0 == [2, 3]
-#guard [1, 2, 3].removeNth 1 == [1, 3]
-#guard [1, 2, 3].removeNth 2 == [1, 2]
-#guard [1, 2, 3].removeNth 3 == [1, 2, 3]
 
 namespace Std.HashSet
 

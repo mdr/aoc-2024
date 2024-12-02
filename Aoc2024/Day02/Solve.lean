@@ -9,7 +9,7 @@ private def decreasingSlowly: HashSet Int := [-1, -2, -3].toSet
 
 private def isSafe (report : Report) : Bool :=
   let diffs := report.differences.toSet
-  diffs.isSubsetOf increasingSlowly || diffs.isSubsetOf decreasingSlowly
+  diffs.isSubsetOf increasingSlowly ∨ diffs.isSubsetOf decreasingSlowly
 
 #guard isSafe [7, 6, 4, 2, 1] == true
 #guard isSafe [1, 2, 7, 8, 9] == false
@@ -25,7 +25,7 @@ def parseAndSolvePart1 (s : String): Except String Int := parseReports s |>.map 
 #guard parseAndSolvePart1 exampleInput == Except.ok 2
 
 private def isSafeWithTolerance (report : Report) : Bool :=
-  List.range report.length |>.map report.removeNth |>.any isSafe
+  List.range report.length |>.map report.eraseIdx |>.any isSafe
 
 #guard isSafeWithTolerance [7, 6, 4, 2, 1] == true
 #guard isSafeWithTolerance [1, 2, 7, 8, 9] == false
