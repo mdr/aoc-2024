@@ -1,4 +1,5 @@
 import Aoc2024.Utils
+import Aoc2024.Day01.Examples
 import Std
 open Std.Internal.Parsec.String
 open Std.Internal.Parsec
@@ -13,4 +14,11 @@ private def inputParser : Parser (List (Int × Int)) := sepBy lineParser (String
 
 def parseLines : String -> Except String (List (Int × Int)) := inputParser.run
 
-#guard parseLines "23   24\n14   13" == Except.ok [(23, 24), (14, 13)]
+#guard parseLines exampleInput == Except.ok [
+  (3, 4),
+  (4, 3),
+  (2, 5),
+  (1, 3),
+  (3, 9),
+  (3, 3)
+]
