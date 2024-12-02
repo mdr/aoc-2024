@@ -12,3 +12,8 @@ root = "Aoc2024.Day01.Main"
 [[lean_exe]]
 name = "day2"
 root = "Aoc2024.Day02.Main"
+
+[[require]]
+name = "batteries"
+scope = "leanprover-community"
+rev = "main"

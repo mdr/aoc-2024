@@ -2,10 +2,10 @@ import Std
 open Std.Internal.Parsec.String
 open Std.Internal.Parsec
 
-def List.sum (xs: List Int) : Int := xs.foldl .add 0
+-- def List.sum (xs: List Int) : Int := xs.foldl .add 0
 
-#guard [].sum = 0
-#guard [1, 2, 3].sum = 6
+-- #guard [].sum = 0
+-- #guard [1, 2, 3].sum = 6
 
 def List.sumBy (f : α → Int) (xs : List α) : Int := xs.foldl (λ acc x => acc + f x) 0
 

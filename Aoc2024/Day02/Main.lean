@@ -1,6 +1,6 @@
-import Aoc2024.Day01.Solve
+import Aoc2024.Day02.Solve
 import Aoc2024.CustomMonadLift
-open Aoc2024.Day01
+open Aoc2024.Day02
 
 def solve (name: String) (inputPath: String) : IO Unit := do
   IO.println name
