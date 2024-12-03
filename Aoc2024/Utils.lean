@@ -47,6 +47,8 @@ def sepBy (p : Parser α) (sep : Parser β) : Parser (List α) :=
 
 namespace List
 
+  def sum (xs: List Int) : Int := xs.foldl .add 0
+
   def sumBy (f : α → Int) (xs : List α) : Int := xs.foldl (λ acc x => acc + f x) 0
 
   def toSet {α:Type} [BEq α] [Hashable α] (xs: List α) : HashSet α :=
@@ -56,6 +58,9 @@ namespace List
     xs.zip xs.tail |>.map (λ (a, b) => b - a)
 
 end List
+
+#guard [].sum = 0
+#guard [1, 2, 3].sum = 6
 
 #guard [1, 2, 3].sumBy (λ x => x * x) = 14
 

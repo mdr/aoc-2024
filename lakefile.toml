@@ -22,6 +22,6 @@ name = "dayXX"
 root = "Aoc2024.DayXX.Main"
 
 [[require]]
-name = "batteries"
-scope = "leanprover-community"
+name = "Regex"
+git = "https://github.com/bergmannjg/regex"
 rev = "main"
