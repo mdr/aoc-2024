@@ -17,7 +17,7 @@ private def findEnabledMulInstructions (enabled : Bool) : List Instruction -> Li
     match instruction with
       | Instruction.mul m n =>
         if enabled then
-          Instruction.mul m n ::findEnabledMulInstructions enabled rest
+          Instruction.mul m n :: findEnabledMulInstructions enabled rest
         else
           findEnabledMulInstructions enabled rest
       | Instruction.do => findEnabledMulInstructions true rest
