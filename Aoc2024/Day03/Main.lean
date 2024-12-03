@@ -1,15 +1,16 @@
 import Aoc2024.Day03.Solve
 import Aoc2024.CustomMonadLift
 
-def solve (name: String) (inputPath: String) : IO Unit := do
-  IO.println name
-  let input <- IO.FS.readFile inputPath
-  IO.println s!"Part 1: {solvePart1 input}"
-  IO.println s!"Part 2: {solvePart2 input}"
-
 def main : IO Unit := do
   IO.println "Day 03"
   IO.println ""
-  solve "Example" "Aoc2024/Day03/inputs/example.txt"
+  IO.println "Part 1"
+  let example1 <- IO.FS.readFile "Aoc2024/Day03/inputs/example1.txt"
+  let example2 <- IO.FS.readFile "Aoc2024/Day03/inputs/example2.txt"
+  let input <- IO.FS.readFile "Aoc2024/Day03/inputs/input.txt"
+  IO.println s!"Example: {solvePart1 example1}"
+  IO.println s!"Input: {solvePart1 input}" -- 174960351
   IO.println ""
-  solve "Puzzle" "Aoc2024/Day03/inputs/input.txt"
+  IO.println "Part 2"
+  IO.println s!"Example: {solvePart2 example2}"
+  IO.println s!"Input: {solvePart2 input}" -- 56275602
