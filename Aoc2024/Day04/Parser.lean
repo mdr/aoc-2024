@@ -4,5 +4,3 @@ import Aoc2024.Utils
 import Std
 
 def parseGrid (s : String) : Grid := s.lines.map (·.toList)
-
--- #guard parseReports exampleInput == Except.ok 42

@@ -54,11 +54,10 @@ private def slidingGrids (grid : Grid): List Grid :=
 ]
 
 private def is2Mas: Grid -> Bool
-  | [r1, r2, r3] =>
-    let match1 := match r1 with | ['M', _, 'S'] => true | _ => false
-    let match2 := match r2 with | [_, 'A', _] => true | _ => false
-    let match3 := match r3 with | ['M', _, 'S'] => true | _ => false
-    match1 && match2 && match3
+  | [
+      ['M', _, 'S'],
+      [ _, 'A', _],
+      ['M', _, 'S']] => true
   | _ => false
 
 private def rotate90 : Grid -> Grid := flipHorizontal ∘ List.transpose
