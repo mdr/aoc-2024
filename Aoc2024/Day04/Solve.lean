@@ -22,6 +22,7 @@ private def gridToString (g : Grid) : String := g.map List.asString |> String.in
 
 private def flipHorizontal (grid : Grid) : Grid := grid.map (·.reverse)
 
+-- ported from https://hackage.haskell.org/package/universe-base-1.1.4/docs/src/Data.Universe.Helpers.html#diagonals
 private def diagonals (grid : List (List α)) : List (List α) :=
   let rec go (b : List (List α)) (es : List (List α)) : List (List α) :=
     let diagonal := b.filterMap List.head?
