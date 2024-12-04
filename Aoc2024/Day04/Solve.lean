@@ -57,7 +57,8 @@ private def is2Mas: Grid -> Bool
   | [
       ['M', _, 'S'],
       [ _, 'A', _],
-      ['M', _, 'S']] => true
+      ['M', _, 'S']
+    ] => true
   | _ => false
 
 private def rotate90 : Grid -> Grid := flipHorizontal ∘ List.transpose
