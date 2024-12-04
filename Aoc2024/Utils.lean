@@ -57,6 +57,14 @@ namespace List
   def differences (xs: List Int) : List Int :=
     xs.zip xs.tail |>.map (λ (a, b) => b - a)
 
+  def slidingWindows (n : Nat) (xs : List α) : List (List α) :=
+    match xs with
+      | [] => []
+      | (x :: xs) =>
+        let window := x :: xs.take (n - 1)
+        if window.length < n then []
+        else window :: slidingWindows n xs
+
 end List
 
 #guard [].sum = 0
@@ -67,6 +75,12 @@ end List
 #guard [].differences == []
 #guard [1].differences == []
 #guard [1, 2, 3, 2, 5].differences == [1, 1, -1, 3]
+
+#guard [1, 2, 3, 4, 5].slidingWindows 2 = [[1, 2], [2, 3], [3, 4], [4, 5]]
+#guard [1, 2, 3, 4, 5].slidingWindows 1 = [[1], [2], [3], [4], [5]]
+#guard [1, 2, 3, 4, 5].slidingWindows 0 = [[1], [2], [3], [4], [5]]
+#guard [1].slidingWindows 2 = []
+#guard ([]: List Nat).slidingWindows 2 = []
 
 namespace Std.HashSet
 
@@ -83,3 +97,8 @@ namespace String
 end String
 
 #guard "1\n2\n3".lines == ["1", "2", "3"]
+
+def iterate (n : Nat) (f : α -> α) (x : α) : α :=
+  match n with
+  | 0 => x
+  | n + 1 => iterate n f (f x)

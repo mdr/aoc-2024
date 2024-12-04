@@ -51,17 +51,49 @@ private def allGridTransformations : List (Grid -> Grid) := [
   diagonals ∘ flipHorizontal,
 ]
 
-def solvePart1 (s : String): Int :=
-  let grid := parseGrid s
-  allGridTransformations.sumBy (λ transformation => transformation grid |> countXmasOccurrencesInRows)
+private def transformGridInAllWays (grid : Grid) : List Grid := allGridTransformations.map (· grid)
 
-#eval solvePart1 exampleInput1
+def solvePart1 (s : String): Int := parseGrid s |> transformGridInAllWays |>.sumBy countXmasOccurrencesInRows
 
 #guard solvePart1 exampleInput1 = 4
 #guard solvePart1 exampleInput2 = 18
 
 -- Part 2
 
-def solvePart2 (things : s) : Int := sorry
+private def slidingGrids (grid : Grid): List Grid :=
+  grid.slidingWindows 3 |>.bind (λ rowBundle => rowBundle.map (List.slidingWindows 3) |>.transpose)
 
--- #guard solvePart2 exampleInput2 = 9
+#guard slidingGrids [['A', 'B', 'C', 'D', 'E'], ['F', 'G', 'H', 'I', 'J'], ['K', 'L', 'M', 'N', 'O']] ==
+[
+  [
+    ['A', 'B', 'C'],
+    ['F', 'G', 'H'],
+    ['K', 'L', 'M']
+  ], [
+    ['B', 'C', 'D'],
+    ['G', 'H', 'I'],
+    ['L', 'M', 'N']
+  ], [
+    ['C', 'D', 'E'],
+    ['H', 'I', 'J'],
+    ['M', 'N', 'O']
+  ]
+]
+
+private def is2Mas: Grid -> Bool
+  | [r1, r2, r3] =>
+    let match1 := match r1 with | ['M', _, 'S'] => true | _ => false
+    let match2 := match r2 with | [_, 'A', _] => true | _ => false
+    let match3 := match r3 with | ['M', _, 'S'] => true | _ => false
+    match1 && match2 && match3
+  | _ => false
+
+private def rotate90 (grid : Grid) : Grid := grid.transpose.map (·.reverse)
+
+private def allRotations (grid : Grid) : List Grid :=
+  [grid, rotate90 grid, iterate 2 rotate90 grid, iterate 3 rotate90 grid]
+
+def solvePart2 (s : String) : Int :=
+  parseGrid s |> slidingGrids |>.bind allRotations |>.countP is2Mas
+
+#guard solvePart2 exampleInput2 = 9
