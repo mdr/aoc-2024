@@ -61,7 +61,7 @@ private def is2Mas: Grid -> Bool
     match1 && match2 && match3
   | _ => false
 
-private def rotate90 (grid : Grid) : Grid := grid.transpose.map (·.reverse)
+private def rotate90 : Grid -> Grid := flipHorizontal ∘ List.transpose
 
 private def allRotations : List (Grid -> Grid) :=
   [id, rotate90, iterate 2 rotate90, iterate 3 rotate90]
