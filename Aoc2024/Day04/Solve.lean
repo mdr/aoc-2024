@@ -90,10 +90,12 @@ private def is2Mas: Grid -> Bool
 
 private def rotate90 (grid : Grid) : Grid := grid.transpose.map (·.reverse)
 
-private def allRotations (grid : Grid) : List Grid :=
-  [grid, rotate90 grid, iterate 2 rotate90 grid, iterate 3 rotate90 grid]
+private def allRotations : List (Grid -> Grid) :=
+  [id, rotate90, iterate 2 rotate90, iterate 3 rotate90]
+
+private def rotateAll (grid : Grid) : List Grid := allRotations.map (· grid)
 
 def solvePart2 (s : String) : Int :=
-  parseGrid s |> slidingGrids |>.bind allRotations |>.countP is2Mas
+  parseGrid s |> slidingGrids |>.bind rotateAll |>.countP is2Mas
 
 #guard solvePart2 exampleInput2 = 9
