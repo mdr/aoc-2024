@@ -25,4 +25,10 @@ tasks:
     deps: [build]
     cmds: 
       - .lake/build/bin/day3
+  day4:
+    desc: Run day 4
+    deps: [build]
+    cmds: 
+      - .lake/build/bin/day4
+      
  

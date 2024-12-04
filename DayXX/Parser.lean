@@ -1,4 +1,6 @@
 import Aoc2024.DayXX.Examples
+import Aoc2024.DayXX.Types
+import Aoc2024.Utils
 import Std
 open Std.Internal.Parsec.String
 open Std.Internal.Parsec

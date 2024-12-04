@@ -77,3 +77,9 @@ end Std.HashSet
 
 #guard [1, 3].toSet.isSubsetOf [1, 2, 3].toSet == true
 #guard [1, 2, 3].toSet.isSubsetOf [1, 3].toSet == false
+
+namespace String
+  def lines (s : String) : List String := s.splitOn "\n"
+end String
+
+#guard "1\n2\n3".lines == ["1", "2", "3"]
