@@ -47,20 +47,10 @@ private def allGridTransformations : List (Grid -> Grid) := [
   List.transpose,
   flipHorizontal ∘ List.transpose,
   diagonals,
-  diagonals ∘ List.transpose,
   diagonals ∘ flipHorizontal,
+  diagonals ∘ List.transpose,
   diagonals ∘ List.transpose ∘ flipHorizontal,
 ]
-
--- def g := parseGrid exampleInput1
--- #eval g |> id
--- #eval g |> flipHorizontal
--- #eval g |> List.transpose
--- #eval g |> List.transpose |> flipHorizontal
--- #eval g |> diagonals
--- #eval g |> List.transpose |> diagonals
--- #eval g |> flipHorizontal |> diagonals
--- #eval g |> flipHorizontal |> List.transpose |> diagonals
 
 def solvePart1 (s : String): Int :=
   let grid := parseGrid s
@@ -71,6 +61,4 @@ def solvePart1 (s : String): Int :=
 
 def solvePart2 (things : s) : Int := sorry
 
--- def parseAndSolvePart2 (s : String): Except String Int := parseGrid s |>.map solvePart2
-
--- #guard parseAndSolvePart2 exampleInput == Except.ok 4
+-- #guard solvePart2 exampleInput2 = 9

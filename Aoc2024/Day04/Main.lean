@@ -8,7 +8,7 @@ def main : IO Unit := do
   let exampleInput <- IO.FS.readFile "Aoc2024/Day04/inputs/example.txt"
   let puzzleInput <- IO.FS.readFile "Aoc2024/Day04/inputs/input.txt"
   IO.println s!"Example: {solvePart1 exampleInput}"
-  IO.println s!"Puzzle: {solvePart1 puzzleInput}" --
+  IO.println s!"Puzzle: {solvePart1 puzzleInput}" -- 2524
   IO.println ""
   IO.println "Part 2"
   IO.println s!"Example: {solvePart2 exampleInput}"
