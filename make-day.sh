@@ -6,7 +6,7 @@ if [ "$#" -ne 1 ]; then
 fi
 
 day_number=$(printf "%02d" "$1")
-source_dir="Aoc2024/DayXX"
+source_dir="DayXX"
 target_dir="Aoc2024/Day$day_number"
 
 # Ensure the target day is in the correct format
