@@ -13,8 +13,7 @@ private def countXmasOccurrencesInRow : List Char -> Int
 
 #guard countXmasOccurrencesInRow "ABXMASXMASXMA".toList == 2
 
-private def countXmasOccurrencesInRows (grid : Grid): Int :=
-  grid.sumBy countXmasOccurrencesInRow
+private def countXmasOccurrencesInRows (grid : Grid): Int := grid.sumBy countXmasOccurrencesInRow
 
 private def gridToString (g : Grid) : String := g.map List.asString |> String.intercalate "\n"
 
@@ -22,34 +21,11 @@ private def gridToString (g : Grid) : String := g.map List.asString |> String.in
 
 private def flipHorizontal (grid : Grid) : Grid := grid.map (·.reverse)
 
--- ported from https://hackage.haskell.org/package/universe-base-1.1.4/docs/src/Data.Universe.Helpers.html#diagonals
-private def diagonals (grid : List (List α)) : List (List α) :=
-  let rec go (b : List (List α)) (es : List (List α)) : List (List α) :=
-    let diagonal := b.filterMap List.head?
-    let ts := b.filterMap List.tail?
-    diagonal :: match es with
-      | [] => ts.transpose
-      | e :: es' => go (e :: ts) es'
-  (go [] grid).tail!
-
-#guard diagonals [
-  ["A", "B", "C", "D"],
-  ["E", "F", "G", "H"],
-  ["I", "J", "K", "L"],
-] == [
-  ["A"],
-  ["E", "B"],
-  ["I", "F", "C"],
-  ["J", "G", "D"],
-  ["K", "H"],
-  ["L"],
-]
-
 private def allGridTransformations : List (Grid -> Grid) := [
   id,
   List.transpose,
-  diagonals,
-  diagonals ∘ flipHorizontal,
+  List.diagonals,
+  List.diagonals ∘ flipHorizontal,
 ]
 
 private def transformGridInAllWays (grid : Grid) : List Grid := allGridTransformations.map (· grid)
