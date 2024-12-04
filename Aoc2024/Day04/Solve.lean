@@ -15,10 +15,6 @@ private def countXmasOccurrencesInRow : List Char -> Int
 
 private def countXmasOccurrencesInRows (grid : Grid): Int := grid.sumBy countXmasOccurrencesInRow
 
-private def gridToString (g : Grid) : String := g.map List.asString |> String.intercalate "\n"
-
-#guard gridToString [['A', 'B', 'C'], ['D', 'E', 'F']] = "ABC\nDEF"
-
 private def flipHorizontal (grid : Grid) : Grid := grid.map (·.reverse)
 
 private def allGridTransformations : List (Grid -> Grid) := [
