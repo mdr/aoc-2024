@@ -3,9 +3,12 @@ import Aoc2024.Day04.Examples
 import Aoc2024.Day04.Parser
 import Batteries
 
+-- Part 1
+
 private def countXmasOccurrencesInRow : List Char -> Int
   | [] => 0
-  | 'X' :: 'M' :: 'A' :: 'S' :: rest => 1 + countXmasOccurrencesInRow rest
+  | 'X' :: 'M' :: 'A' :: 'S' :: rest => 1 + countXmasOccurrencesInRow ('S' :: rest) -- continue scan from S as it could start a SAMX
+  | 'S' :: 'A' :: 'M' :: 'X' :: rest => 1 + countXmasOccurrencesInRow ('X' :: rest) -- continue scan from X as it could start a XMAS
   | _ :: rest => countXmasOccurrencesInRow rest
 
 #guard countXmasOccurrencesInRow "ABXMASXMASXMA".toList == 2
@@ -43,21 +46,21 @@ private def diagonals (grid : List (List α)) : List (List α) :=
 
 private def allGridTransformations : List (Grid -> Grid) := [
   id,
-  flipHorizontal,
   List.transpose,
-  flipHorizontal ∘ List.transpose,
   diagonals,
   diagonals ∘ flipHorizontal,
-  diagonals ∘ List.transpose,
-  diagonals ∘ List.transpose ∘ flipHorizontal,
 ]
 
 def solvePart1 (s : String): Int :=
   let grid := parseGrid s
   allGridTransformations.sumBy (λ transformation => transformation grid |> countXmasOccurrencesInRows)
 
+#eval solvePart1 exampleInput1
+
 #guard solvePart1 exampleInput1 = 4
 #guard solvePart1 exampleInput2 = 18
+
+-- Part 2
 
 def solvePart2 (things : s) : Int := sorry
 
