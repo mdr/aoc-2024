@@ -103,6 +103,19 @@ namespace List
     ["K", "H"],
     ["L"],
   ]
+  #guard ([] : List (List Nat)).diagonals = []
+  #guard ([["A"]]).diagonals = [["A"]]
+  #guard ([["A", "B"]]).diagonals = [["A"], ["B"]]
+  #guard [
+    ["A", "B", "C"],
+    ["D"],
+    ["E", "F"],
+  ].diagonals = [
+    ["A"],
+    ["D", "B"],
+    ["E", "C"],
+    ["F"],
+  ]
 end List
 
 namespace Std.HashSet
