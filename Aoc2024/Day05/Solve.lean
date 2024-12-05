@@ -7,7 +7,7 @@ open Std (HashSet)
 
 private def middleElement {α} (l : List α) : Option α := l.get? (l.length / 2)
 
-private def middlePageNumber (update : Update) : Int := middleElement update.pages |>.getD 0
+private def middlePageNumber (update : Update) : Page := middleElement update.pages |>.getD 0
 
 private def isCorrectlyOrdered (rules : List OrderingRule) (update : Update) : Bool :=
   let allowedPairs := rules.map (·.toPair) |>.toSet
