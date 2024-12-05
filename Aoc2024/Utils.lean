@@ -60,8 +60,13 @@ namespace List
   def toSet {α:Type} [BEq α] [Hashable α] (xs: List α) : HashSet α :=
     HashSet.ofList xs
 
+  def slidingPairs (xs: List α) : List (α × α) :=
+    xs.zip xs.tail
+
+  #guard [1, 2, 3, 4].slidingPairs == [(1, 2), (2, 3), (3, 4)]
+
   def differences (xs: List Int) : List Int :=
-    xs.zip xs.tail |>.map (λ (a, b) => b - a)
+    xs.slidingPairs |>.map (λ (a, b) => b - a)
 
   #guard [].differences == []
   #guard [1].differences == []
@@ -116,6 +121,11 @@ namespace List
     ["E", "C"],
     ["F"],
   ]
+
+  def filterNot (p : α -> Bool) (xs : List α) : List α :=
+    xs.filter (λ x => !p x)
+
+  #guard [1, 2, 3, 4].filterNot (λ x => x % 2 == 0) == [1, 3]
 end List
 
 namespace Std.HashSet

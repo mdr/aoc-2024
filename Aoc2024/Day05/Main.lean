@@ -10,10 +10,10 @@ def main : IO Unit := do
   IO.println s!"Example: {<- parseAndSolvePart1 exampleInput}"
   let answerPart1 <- parseAndSolvePart1 puzzleInput
   IO.println s!"Puzzle: {answerPart1}"
-  assert! (answerPart1 == -1)
+  assert! (answerPart1 == 4569)
   IO.println ""
   IO.println "Part 2"
   IO.println s!"Example: {<- parseAndSolvePart2 exampleInput}"
   let answerPart2 <- parseAndSolvePart2 puzzleInput
   IO.println s!"Puzzle: {answerPart2}"
-  assert! (answerPart2 == -1)
+  assert! (answerPart2 == 6456)
