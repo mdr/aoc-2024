@@ -46,16 +46,25 @@ private def simulatePatrol : Nat -> StateM PatrolState Bool
     else
       simulatePatrol fuel
 
-private def solvePart1 (input : PuzzleInput) : Int :=
-  let initialState := PatrolState.initial input
-  let (simulationEndedEarly, finalState) := (simulatePatrol 100000).run initialState
-  if simulationEndedEarly then -1 else finalState.visited.size
+private def MAX_FUEL := 100000
 
-def parseAndSolvePart1 (s : String): Except String Int := parseInput s |>.map solvePart1
+private def solvePart1 (input : PuzzleInput) : Option Int :=
+  let initialState := PatrolState.initial input
+  let (simulationEndedEarly, finalState) := (simulatePatrol MAX_FUEL).run initialState
+  if simulationEndedEarly then none else some finalState.visited.size
+
+def parseAndSolvePart1 (s : String): Except String Int := do
+  let input <- parseInput s
+  let maybeSolution := solvePart1 input
+  maybeSolution.getOrThrow "simulation ended early"
 
 #guard parseAndSolvePart1 exampleInput == Except.ok 41
 
-private def solvePart2 (input : PuzzleInput) : Int := sorry
+private def solvePart2 (input : PuzzleInput) : Int :=
+  let initialState := PatrolState.initial input
+  let (simulationEndedEarly, finalState) := (simulatePatrol MAX_FUEL).run initialState
+  sorry
+
 
 def parseAndSolvePart2 (s : String): Except String Int := parseInput s |>.map solvePart2
 
