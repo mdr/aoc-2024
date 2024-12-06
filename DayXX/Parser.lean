@@ -7,6 +7,6 @@ open Std.Internal.Parsec
 
 private def inputParser : Parser (List Int) := sorry
 
-def parseThings : String -> Except String (List Int) := inputParser.run
+def parseInput : String -> Except String (List Int) := inputParser.run
 
--- #guard parseReports exampleInput == Except.ok 42
+-- #guard parseInput exampleInput == Except.ok 42
