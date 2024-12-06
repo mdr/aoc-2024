@@ -6,20 +6,25 @@ open Std.Internal.Parsec.String
 open Std.Internal.Parsec
 open Std (HashSet)
 
--- private def inputParser : Parser (List Int) := sorry
+instance : Bind List where bind := List.bind
+instance : Pure List where pure := List.pure
 
-private def decorateWithCoordinates (s: String): List (Point × Char) :=
-  s.splitOn "\n" |>.enum |>.bind (λ ⟨y, line⟩ =>
-    line.toList.enum.map (λ ⟨x, c⟩ => (⟨x, y⟩, c))
-  )
+private def decorateWithCoordinates (s: String): List (Point × Char) := do
+  let (y, line) <- s.splitOn "\n" |> .enum
+  let (x, c) <- line.toList.enum
+  pure (⟨x, y⟩, c)
 
 def parseInput (s: String): Except String PuzzleInput := do
   let decoratedChars := decorateWithCoordinates s
   let obstacles := decoratedChars.filterMap (λ ⟨p, c⟩ => (c == '#').toOption p) |>.toSet
   let start <- decoratedChars.filterMap (λ ⟨p, c⟩ => (c == '^').toOption p) |>.head? |>.getOrThrow "no start found"
   let (xs, ys) := decoratedChars.map (·.1.toPair) |>.unzip
-  let width <- xs.toArray.max?.map (· + 1 |>.toNat) |>.getOrThrow "empty input"
-  let height <- ys.toArray.max?.map (· + 1 |>.toNat) |>.getOrThrow "empty input"
-  pure { obstacles, start, width, height }
+  let width <- xs.max?.map (· + 1 |>.toNat) |>.getOrThrow "empty input"
+  let height <- ys.max?.map (· + 1 |>.toNat) |>.getOrThrow "empty input"
+  let bounds: Rectangle := { topLeft := Point.origin, width, height }
+  pure { obstacles, start, bounds }
 
--- #guard parseReports exampleInput == Except.ok 42
+private def examplePuzzleInput := parseInput exampleInput
+#guard (examplePuzzleInput.map (·.bounds)) == Except.ok (Rectangle.mk Point.origin 10 10)
+#guard (examplePuzzleInput.map (·.start)) == Except.ok ⟨4, 6⟩
+#guard (examplePuzzleInput.map (·.obstacles.size)) == Except.ok 8
