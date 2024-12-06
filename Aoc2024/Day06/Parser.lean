@@ -16,8 +16,9 @@ private def decorateWithCoordinates (s: String): List (Point × Char) := do
 
 def parseInput (s: String): Except String PuzzleInput := do
   let decoratedChars := decorateWithCoordinates s
-  let obstacles := decoratedChars.filterMap (λ ⟨p, c⟩ => (c == '#').toOption p) |>.toSet
-  let start <- decoratedChars.filterMap (λ ⟨p, c⟩ => (c == '^').toOption p) |>.head? |>.getOrThrow "no start found"
+  let findPoints (c: Char) := decoratedChars.filterMap (λ ⟨p, c'⟩ => (c == c').toOption p)
+  let obstacles := findPoints '#' |>.toSet
+  let start <- findPoints '^' |>.head? |>.getOrThrow "no start found"
   let (xs, ys) := decoratedChars.map (·.1.toPair) |>.unzip
   let width <- xs.max?.map (· + 1 |>.toNat) |>.getOrThrow "empty input"
   let height <- ys.max?.map (· + 1 |>.toNat) |>.getOrThrow "empty input"

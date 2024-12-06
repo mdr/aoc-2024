@@ -13,6 +13,7 @@ inductive Direction where
   | Right
   | Down
   | Left
+deriving BEq, Repr, Inhabited, Hashable
 
 def Direction.turnRight : Direction -> Direction
   | Direction.Up => Direction.Right
@@ -40,6 +41,7 @@ def Rectangle.contains (r : Rectangle) (p : Point) : Bool :=
     r.topLeft.y ≤ p.y && p.y < r.topLeft.y + r.height
 
 #guard Rectangle.contains { topLeft := Point.origin, width := 2, height := 2 } { x := 1, y := 1 }
+#guard !Rectangle.contains { topLeft := Point.origin, width := 2, height := 2 } { x := 2, y := 2 }
 
 structure PuzzleInput where
   obstacles : HashSet Point
