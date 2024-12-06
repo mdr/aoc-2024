@@ -6,10 +6,10 @@ private def solvePart1 (things : List Int) : Int := sorry
 
 def parseAndSolvePart1 (s : String): Except String Int := parseThings s |>.map solvePart1
 
--- #guard parseAndSolvePart1 exampleInput == Except.ok 2
+-- #guard parseAndSolvePart1 exampleInput == Except.ok -1
 
 private def solvePart2 (things : List Int) : Int := sorry
 
 def parseAndSolvePart2 (s : String): Except String Int := parseThings s |>.map solvePart2
 
--- #guard parseAndSolvePart2 exampleInput == Except.ok 4
+-- #guard parseAndSolvePart2 exampleInput == Except.ok -1

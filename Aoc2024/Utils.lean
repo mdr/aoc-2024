@@ -148,3 +148,18 @@ def iterate (n : Nat) (f : α -> α) (x : α) : α :=
   match n with
   | 0 => x
   | n + 1 => iterate n f (f x)
+
+namespace Bool
+  def toOption (x : Bool) (y : α) : Option α := if x then some y else none
+
+  #guard true.toOption 42 == some 42
+  #guard false.toOption 42 == none
+end Bool
+
+namespace Option
+  def getOrThrow (message : String) : Option α -> Except String α
+    | some x => pure x
+    | none => throw message
+  #guard (some 42).getOrThrow "Error" == Except.ok 42
+  #guard (none : Option Int).getOrThrow "Error" == Except.error "Error"
+end Option
