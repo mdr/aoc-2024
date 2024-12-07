@@ -6,6 +6,5 @@ deriving Repr, BEq, Hashable, Inhabited
 inductive Operator where
   | add
   | multiply
+  | concatenation
 deriving Repr, BEq, Hashable, Inhabited
-
-def Operator.all : List Operator := [Operator.add, Operator.multiply]

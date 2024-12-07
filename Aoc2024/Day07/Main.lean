@@ -16,4 +16,4 @@ def main : IO Unit := do
   IO.println s!"Example: {<- parseAndSolvePart2 exampleInput}"
   let answerPart2 <- parseAndSolvePart2 puzzleInput
   IO.println s!"Puzzle: {answerPart2}"
-  assert! (answerPart2 == -1)
+  assert! (answerPart2 == 637696070419031)
