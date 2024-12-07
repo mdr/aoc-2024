@@ -1,6 +1,7 @@
 import Aoc2024.Utils
 import Aoc2024.DayXX.Examples
 import Aoc2024.DayXX.Parser
+import Aoc2024.DayXX.Types
 
 -- Part 1
 
