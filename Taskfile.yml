@@ -1,56 +1,71 @@
 version: '3'
-
 tasks:
   default: task --list
   build:
     desc: Build
     sources:
-      - Aoc2024/**/*.lean
+    - Aoc2024/**/*.lean
     generates:
-      - .lake/build/bin/*
+    - .lake/build/bin/*
     cmds:
-      - lake build
+    - lake build
   make-day:
     desc: Template a day
     cmds:
-      - ./make-day.sh {{.CLI_ARGS}}
+    - ./make-day.sh {{.CLI_ARGS}}
+    - ./add_day_to_taskfile.py {{.CLI_ARGS}}
+    - ./add_day_to_lakefile.py {{.CLI_ARGS}}
   day1:
     desc: Run day 1
-    deps: [build]
-    cmds: 
-      - .lake/build/bin/day1
+    deps:
+    - build
+    cmds:
+    - .lake/build/bin/day1
   day2:
     desc: Run day 2
-    deps: [build]
-    cmds: 
-      - .lake/build/bin/day2
+    deps:
+    - build
+    cmds:
+    - .lake/build/bin/day2
   day3:
     desc: Run day 3
-    deps: [build]
-    cmds: 
-      - .lake/build/bin/day3
+    deps:
+    - build
+    cmds:
+    - .lake/build/bin/day3
   day4:
     desc: Run day 4
-    deps: [build]
-    cmds: 
-      - .lake/build/bin/day4
+    deps:
+    - build
+    cmds:
+    - .lake/build/bin/day4
   day5:
     desc: Run day 5
-    deps: [build]
-    cmds: 
-      - .lake/build/bin/day5
+    deps:
+    - build
+    cmds:
+    - .lake/build/bin/day5
   day6:
     desc: Run day 6
-    deps: [build]
-    cmds: 
-      - .lake/build/bin/day6
+    deps:
+    - build
+    cmds:
+    - .lake/build/bin/day6
   day7:
     desc: Run day 7
-    deps: [build]
-    cmds: 
-      - .lake/build/bin/day7
+    deps:
+    - build
+    cmds:
+    - .lake/build/bin/day7
   day8:
     desc: Run day 8
-    deps: [build]
-    cmds: 
-      - .lake/build/bin/day8
+    deps:
+    - build
+    cmds:
+    - .lake/build/bin/day8
+  day9:
+    desc: Run day 9
+    deps:
+    - build
+    cmds:
+    - .lake/build/bin/day9
