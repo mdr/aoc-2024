@@ -5,7 +5,6 @@ import Std
 open Std.Internal.Parsec.String
 open Std.Internal.Parsec
 
-
 instance : Bind List where bind := List.bind
 instance : Pure List where pure := List.pure
 
@@ -21,5 +20,3 @@ def parseInput (s : String): PuzzleInput :=
   let height := ys.max?.map (· + 1 |>.toNat) |>.getD 0
   let bounds: Rectangle := { topLeft := Point.origin, width, height }
   { bounds, decoratedChars }
-
--- #guard parseInput exampleInput == ??

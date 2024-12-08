@@ -134,6 +134,15 @@ namespace List
     ) none
   #guard [1, 2, 3, 4].maxBy id == some 4
 
+  def replicateM (n : Nat) (options : List α) : List (List α) :=
+    let rec loop (n : Nat) (acc : List (List α)) : List (List α) :=
+      match n with
+      | 0 => acc
+      | n + 1 => loop n (acc.bind λ l => options.map (λ o => o :: l))
+    loop n [[]]
+  #guard [1, 2].replicateM 0 == [[]]
+  #guard [1, 2].replicateM 3 == [[1, 1, 1], [2, 1, 1], [1, 2, 1], [2, 2, 1], [1, 1, 2], [2, 1, 2], [1, 2, 2], [2, 2, 2]]
+
 end List
 
 namespace Std.HashSet
@@ -171,12 +180,3 @@ namespace Option
   #guard (some 42).getOrThrow "Error" == Except.ok 42
   #guard (none : Option Int).getOrThrow "Error" == Except.error "Error"
 end Option
-
-def replicateM (n : Nat) (options : List α) : List (List α) :=
-  let rec loop (n : Nat) (acc : List (List α)) : List (List α) :=
-    match n with
-    | 0 => acc
-    | n + 1 => loop n (acc.bind λ l => options.map (λ o => o :: l))
-  loop n [[]]
-#guard replicateM 0 [1, 2] == [[]]
-#guard replicateM 3 [1, 2] == [[1, 1, 1], [2, 1, 1], [1, 2, 1], [2, 2, 1], [1, 1, 2], [2, 1, 2], [1, 2, 2], [2, 2, 2]]

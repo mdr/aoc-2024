@@ -16,7 +16,7 @@ private def Equation.isTrue (equation : Equation) (operators : List Operator) : 
 private def Equation.operatorPositions (equation : Equation) : Nat := equation.numbers.length - 1
 
 private def canEquationPossiblyBeTrue (operators : List Operator) (equation : Equation) : Bool :=
-  replicateM equation.operatorPositions operators |>.any equation.isTrue
+  operators.replicateM equation.operatorPositions |>.any equation.isTrue
 
 private def solveGeneric (operators : List Operator) (equations : List Equation) : Int :=
   equations.filter (canEquationPossiblyBeTrue operators) |>.sumBy (·.testValue)
