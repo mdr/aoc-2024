@@ -218,8 +218,7 @@ def natRange (from_ to : Nat) : List Nat :=
 #guard natRange 0 3 == [0, 1, 2]
 #guard natRange 1 4 == [1, 2, 3]
 
-def intRange (m n : Int) : List Int :=
-  ((List.range (Int.toNat (n - m))) : List Nat).map fun (r : Nat) => (m + r : Int)
+def intRange (from_ to : Int) : List Int := (List.range (to - from_).toNat).map (λ (n : Nat) => (from_ + n))
 #guard intRange 0 3 == [0, 1, 2]
 #guard intRange (-3) 2 == [-3, -2, -1, 0, 1]
 #guard intRange 1 1 == []
