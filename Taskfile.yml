@@ -13,8 +13,8 @@ tasks:
     desc: Template a day
     cmds:
     - ./make-day.sh {{.CLI_ARGS}}
-    - ./add_day_to_taskfile.py {{.CLI_ARGS}}
-    - ./add_day_to_lakefile.py {{.CLI_ARGS}}
+    - ./add_day_to_taskfile.py Taskfile.yml {{.CLI_ARGS}}
+    - ./add_day_to_lakefile.py lakefile.toml {{.CLI_ARGS}}
   day1:
     desc: Run day 1
     deps:

@@ -250,6 +250,5 @@ def Rectangle.allPoints (r : Rectangle) : List Point := do
   let x <- intRange r.topLeft.x (r.topLeft.x + r.width)
   let y <- intRange r.topLeft.y (r.topLeft.y + r.height)
   return { x := x, y := y }
-
 #guard Rectangle.allPoints { topLeft := Point.origin, width := 2, height := 2 } ==
   [{ x := 0, y := 0 }, { x := 0, y := 1 }, { x := 1, y := 0 }, { x := 1, y := 1 }]
