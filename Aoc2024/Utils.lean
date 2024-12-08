@@ -2,7 +2,7 @@ import Std
 import Batteries
 open Std.Internal.Parsec.String
 open Std.Internal.Parsec
-open Std (HashSet)
+open Std (HashSet HashMap)
 
 -- https://brandonrozek.com/blog/writing-unit-tests-lean-4/
 def Except.deq [DecidableEq α] [DecidableEq β] : DecidableEq (Except α β) := by
@@ -166,7 +166,13 @@ namespace List
   #guard [1, 2, 3].combinations 4 == []
   #guard [1, 2, 3, 4].combinations 2 == [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]
 
-      -- xs.bind (λ x => (xs.filter (· != x)).combinations n.map (x :: ·))
+  def groupByKey [BEq α] [Hashable α] (key : β → α) (xs : List β): HashMap α (List β) :=
+     xs.toArray.groupByKey key |>.map (λ _ v => v.toList)
+
+  def groupByAndTransformValues [BEq α] [Hashable α] (key : β → α) (f : β → γ) (xs : List β): HashMap α (List γ) :=
+    xs.groupByKey key |>.map (λ _ v => v.map f)
+
+  def flatMap {α : Type u} {β : Type v} (a : List α) (b : α → List β) : List β := join (map b a)
 
 end List
 
@@ -217,3 +223,5 @@ def intRange (m n : Int) : List Int :=
 #guard intRange 0 3 == [0, 1, 2]
 #guard intRange (-3) 2 == [-3, -2, -1, 0, 1]
 #guard intRange 1 1 == []
+
+instance hashableChar: Hashable Char where hash c := c.toNat |> hash
