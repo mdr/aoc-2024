@@ -7,10 +7,8 @@ open Std (HashMap)
 
 -- Part 1
 
-private def removeDots (decoratedChars : List PointAndChar) : List PointAndChar := decoratedChars.filter (·.char != '.')
-
 private def getAntennaeGroups (input : PuzzleInput) : List (List Point) :=
-  input.decoratedChars |> removeDots |>.groupByAndTransformValues (·.char) (·.point) |>.values
+  input.decoratedChars |>.groupByAndTransformValues (·.char) (·.point) |>.values
 
 private def findAntinodes (antennaGroup : List Point) : List Point := do
   let antenna1 <- antennaGroup

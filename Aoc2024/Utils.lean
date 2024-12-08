@@ -28,13 +28,6 @@ instance [BEq α] [BEq β] : BEq (Except α β) where
     | Except.error x, Except.error y => x == y
     | _, _ => false
 
-def getOrThrow (message : String) : Option α -> Except String α
-  | some x => pure x
-  | none => throw message
-
-#guard (getOrThrow "Error" (some 42) == Except.ok 42)
-#guard (getOrThrow "Error" (none : Option Int) == Except.error "Error")
-
 def sepBy (p : Parser α) (sep : Parser β) : Parser (List α) :=
   (do
     let x ← p
