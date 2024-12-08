@@ -28,10 +28,11 @@ private def findAntinodes (antennaGroup : List Point) : List Point := do
   else
     []
 
+private def getAntennaeGroups (input : PuzzleInput) : List (List Point) :=
+  input.decoratedChars |> removeDots |>.toArray.groupByKey (·.2) |>.map (λ _ v => v.map (·.1) |>.toList) |>.values
+
 private def solvePart1 (input : PuzzleInput) : Int :=
-  let antennasByFrequency : HashMap Char (List Point) :=
-    input.decoratedChars |> removeDots |>.toArray.groupByKey (·.2) |>.map (λ _ v => v.map (·.1) |>.toList)
-  antennasByFrequency.values.bind findAntinodes |>.filter (input.bounds.contains) |>.toSet.size
+  getAntennaeGroups input |>.bind findAntinodes |>.filter (input.bounds.contains) |>.toSet.size
 
 def parseAndSolvePart1 (s : String): Int := parseInput s |> solvePart1
 
@@ -39,8 +40,21 @@ def parseAndSolvePart1 (s : String): Int := parseInput s |> solvePart1
 
 -- Part 2
 
-private def solvePart2 (input : PuzzleInput) : Int := sorry
+private def combinationPairs [BEq α] (xs : List α) : List (α × α) := do
+  let [x1, x2] <- xs.combinations 2 | []
+  return (x1, x2)
+
+private def isInLineWith (pair : (Point × Point)) (point : Point) : Bool :=
+  let (p1, p2) := pair
+  let v1 := p1.vectorTo p2
+  let v2 := p1.vectorTo point
+  v1.x * v2.y == v1.y * v2.x
+
+private def solvePart2 (input : PuzzleInput) : Int :=
+  let antennaePairs := getAntennaeGroups input |>.bind combinationPairs
+  let isAntinode (point : Point) : Bool := antennaePairs.any (λ pair => isInLineWith pair point)
+  input.bounds.allPoints.countP isAntinode
 
 def parseAndSolvePart2 (s : String): Int := parseInput s |> solvePart2
 
--- #guard parseAndSolvePart2 exampleInput == 34
+#guard parseAndSolvePart2 exampleInput == 34

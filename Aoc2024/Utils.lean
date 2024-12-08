@@ -46,6 +46,9 @@ def sepBy (p : Parser α) (sep : Parser β) : Parser (List α) :=
 #guard (sepBy digits (skipChar ',')).run "4" == .ok [4]
 #guard (sepBy digits (skipChar ',')).run "" == .ok []
 
+instance listBind: Bind List where bind := List.bind
+instance listPure: Pure List where pure := List.pure
+
 namespace List
 
   def sum (xs: List Int) : Int := xs.foldl .add 0
@@ -132,6 +135,7 @@ namespace List
       | some y => if f x > f y then some x else some y
       | none => some x
     ) none
+
   #guard [1, 2, 3, 4].maxBy id == some 4
 
   def replicateM (n : Nat) (options : List α) : List (List α) :=
@@ -140,8 +144,29 @@ namespace List
       | 0 => acc
       | n + 1 => loop n (acc.bind λ l => options.map (λ o => o :: l))
     loop n [[]]
+
   #guard [1, 2].replicateM 0 == [[]]
   #guard [1, 2].replicateM 3 == [[1, 1, 1], [2, 1, 1], [1, 2, 1], [2, 2, 1], [1, 1, 2], [2, 1, 2], [1, 2, 2], [2, 2, 2]]
+
+  def eraseAll [BEq α] (x: α) (xs : List α)  : List α := xs.filter (· != x)
+  #guard [1, 2, 3, 2].eraseAll 2 == [1, 3]
+
+  def combinations {α} [BEq α] (n : Nat) (xs : List α) : List (List α) :=
+    match n with
+      | 0 => [[]]
+      | n + 1 =>
+        match xs with
+          | [] => []
+          | x :: xs => (xs.combinations n).map (x :: ·) ++ xs.combinations (n + 1)
+
+  #guard [1, 2, 3].combinations 0 == [[]]
+  #guard [1, 2, 3].combinations 1 == [[1], [2], [3]]
+  #guard [1, 2, 3].combinations 2 == [[1, 2], [1, 3], [2, 3]]
+  #guard [1, 2, 3].combinations 3 == [[1, 2, 3]]
+  #guard [1, 2, 3].combinations 4 == []
+  #guard [1, 2, 3, 4].combinations 2 == [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]
+
+      -- xs.bind (λ x => (xs.filter (· != x)).combinations n.map (x :: ·))
 
 end List
 
@@ -180,3 +205,15 @@ namespace Option
   #guard (some 42).getOrThrow "Error" == Except.ok 42
   #guard (none : Option Int).getOrThrow "Error" == Except.error "Error"
 end Option
+
+def natRange (from_ to : Nat) : List Nat :=
+  let ns := List.range (to - from_)
+  ns.map (· + from_)
+#guard natRange 0 3 == [0, 1, 2]
+#guard natRange 1 4 == [1, 2, 3]
+
+def intRange (m n : Int) : List Int :=
+  ((List.range (Int.toNat (n - m))) : List Nat).map fun (r : Nat) => (m + r : Int)
+#guard intRange 0 3 == [0, 1, 2]
+#guard intRange (-3) 2 == [-3, -2, -1, 0, 1]
+#guard intRange 1 1 == []
