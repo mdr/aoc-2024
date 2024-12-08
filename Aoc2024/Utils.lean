@@ -53,11 +53,9 @@ namespace List
 
   #guard [1, 2, 3].sumBy (λ x => x * x) = 14
 
-  def toSet {α:Type} [BEq α] [Hashable α] (xs: List α) : HashSet α :=
-    HashSet.ofList xs
+  def toSet {α:Type} [BEq α] [Hashable α] (xs: List α) : HashSet α := HashSet.ofList xs
 
-  def slidingPairs (xs: List α) : List (α × α) :=
-    xs.zip xs.tail
+  def slidingPairs (xs: List α) : List (α × α) := xs.zip xs.tail
 
   #guard [1, 2, 3, 4].slidingPairs == [(1, 2), (2, 3), (3, 4)]
 
@@ -141,16 +139,13 @@ namespace List
   #guard [1, 2].replicateM 0 == [[]]
   #guard [1, 2].replicateM 3 == [[1, 1, 1], [2, 1, 1], [1, 2, 1], [2, 2, 1], [1, 1, 2], [2, 1, 2], [1, 2, 2], [2, 2, 2]]
 
-  def eraseAll [BEq α] (x: α) (xs : List α)  : List α := xs.filter (· != x)
+  def eraseAll [BEq α] (x: α) (xs : List α) : List α := xs.filter (· != x)
   #guard [1, 2, 3, 2].eraseAll 2 == [1, 3]
 
-  def combinations {α} [BEq α] (n : Nat) (xs : List α) : List (List α) :=
-    match n with
-      | 0 => [[]]
-      | n + 1 =>
-        match xs with
-          | [] => []
-          | x :: xs => (xs.combinations n).map (x :: ·) ++ xs.combinations (n + 1)
+  def combinations {α} [BEq α] : Nat -> List α -> List (List α)
+    | 0, _ => [[]]
+    | _ + 1, [] => []
+    | n + 1, x :: xs => (xs.combinations n).map (x :: ·) ++ xs.combinations (n + 1)
 
   #guard [1, 2, 3].combinations 0 == [[]]
   #guard [1, 2, 3].combinations 1 == [[1], [2], [3]]
