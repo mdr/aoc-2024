@@ -10,6 +10,10 @@ tasks:
       - .lake/build/bin/*
     cmds:
       - lake build
+  make-day:
+    desc: Template a day
+    cmds:
+      - ./make-day.sh {{.CLI_ARGS}}
   day1:
     desc: Run day 1
     deps: [build]
@@ -45,3 +49,8 @@ tasks:
     deps: [build]
     cmds: 
       - .lake/build/bin/day7
+  day8:
+    desc: Run day 8
+    deps: [build]
+    cmds: 
+      - .lake/build/bin/day8

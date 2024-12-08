@@ -126,6 +126,14 @@ namespace List
     xs.filter (λ x => !p x)
 
   #guard [1, 2, 3, 4].filterNot (λ x => x % 2 == 0) == [1, 3]
+
+  def maxBy (f : α -> Nat) (xs : List α) : Option α :=
+    xs.foldl (λ acc x => match acc with
+      | some y => if f x > f y then some x else some y
+      | none => some x
+    ) none
+  #guard [1, 2, 3, 4].maxBy id == some 4
+
 end List
 
 namespace Std.HashSet

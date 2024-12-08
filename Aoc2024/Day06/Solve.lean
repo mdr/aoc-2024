@@ -73,7 +73,7 @@ private def doesPatrolLoop (initialState: PatrolState): Bool :=
 
 private def solvePart2 (input : PuzzleInput) : Int :=
   let initialState := PatrolState.initial input
-  let (simulationEndedEarly, finalState) := (simulatePatrol MAX_FUEL).run initialState
+  let (_, finalState) := (simulatePatrol MAX_FUEL).run initialState
   let candidateObstacles := finalState.visited.erase input.start
   candidateObstacles.toList.countP (doesPatrolLoop ∘ initialState.addObstacle)
 

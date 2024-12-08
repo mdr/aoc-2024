@@ -1,6 +1,6 @@
 name = "aoc2024"
 version = "0.1.0"
-defaultTargets = ["day1", "day2", "day3", "day4", "day5", "day6", "day7"]
+defaultTargets = ["day1", "day2", "day3", "day4", "day5", "day6", "day7", "day8"]
 
 [[lean_lib]]
 name = "Aoc2024"
@@ -32,6 +32,10 @@ root = "Aoc2024.Day06.Main"
 [[lean_exe]]
 name = "day7"
 root = "Aoc2024.Day07.Main"
+
+[[lean_exe]]
+name = "day8"
+root = "Aoc2024.Day08.Main"
 
 [[require]]
 name = "Regex"
