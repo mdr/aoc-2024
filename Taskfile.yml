@@ -69,3 +69,9 @@ tasks:
     - build
     cmds:
     - .lake/build/bin/day9
+  day10:
+    desc: Run day 10
+    deps:
+    - build
+    cmds:
+    - .lake/build/bin/day10
