@@ -169,10 +169,23 @@ namespace Std.HashSet
   def isSubsetOf [Hashable α] [BEq α] (xs: HashSet α) (ys: HashSet α) : Bool :=
     xs.all ys.contains
 
+  #guard [1, 3].toSet.isSubsetOf [1, 2, 3].toSet == true
+  #guard [1, 2, 3].toSet.isSubsetOf [1, 3].toSet == false
+
 end Std.HashSet
 
-#guard [1, 3].toSet.isSubsetOf [1, 2, 3].toSet == true
-#guard [1, 2, 3].toSet.isSubsetOf [1, 3].toSet == false
+namespace Std.HashMap
+
+  def foldl [BEq α] [Hashable α] (m : HashMap α β) (init : γ) (f : γ -> α -> β -> γ) : γ :=
+    m.toList.foldl (init := init) λ acc (k, v) => f acc k v
+
+  def invert [BEq β] [Hashable β] [BEq α] [Hashable α] (m : HashMap α β) : HashMap β (List α) :=
+    m.foldl (init := HashMap.empty) λ acc k v =>
+      match acc.get? v with
+      | some ks => acc.insert v (k :: ks)
+      | none => acc.insert v [k]
+
+end Std.HashMap
 
 namespace String
   def lines (s : String) : List String := s.splitOn "\n"
@@ -252,3 +265,5 @@ def Rectangle.allPoints (r : Rectangle) : List Point := do
   return { x := x, y := y }
 #guard Rectangle.allPoints { topLeft := Point.origin, width := 2, height := 2 } ==
   [{ x := 0, y := 0 }, { x := 0, y := 1 }, { x := 1, y := 0 }, { x := 1, y := 1 }]
+
+def charDigitToNat (c : Char) : Nat := c.toNat - '0'.toNat

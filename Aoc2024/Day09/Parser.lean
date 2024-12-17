@@ -5,9 +5,7 @@ import Std
 open Std.Internal.Parsec.String
 open Std.Internal.Parsec
 
-private def digitToNat (b : Char) : Nat := b.toNat - '0'.toNat
-
-private def diskMapParser : Parser (List Nat) := Array.toList <$> many (digitToNat <$> digit)
+private def diskMapParser : Parser (List Nat) := Array.toList <$> many (charDigitToNat <$> digit)
 
 def parseDiskMap : String -> Except String (List Nat) := diskMapParser.run
 
